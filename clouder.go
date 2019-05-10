@@ -65,6 +65,11 @@ func CreateInstanceCluster(instanceCluster InstanceCluster, c chan OutMsg) {
 
 func CreateCluster(cluster Cluster, c chan OutMsg) {
 
+	var options string
+	if cluster.psp == true {
+		options = "--enable-pod-security-policy"
+	}
+
 	var err_out error
 	cmd_tpl := `gcloud beta container --project "%v" clusters create "%v" --zone "%v" \
     --no-enable-basic-auth --cluster-version "1.11.8-gke.6" --machine-type "%v" \
@@ -72,13 +77,12 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
     --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
     --preemptible --num-nodes "%v" --no-enable-cloud-logging --no-enable-cloud-monitoring \
     --no-enable-ip-alias --network "%v" --subnetwork "%v" \
-	--enable-autoscaling --min-nodes "%v" --max-nodes "%v" \
-	--enable-pod-security-policy \
+	--enable-autoscaling --min-nodes "%v" --max-nodes "%v" %v \
     --addons HorizontalPodAutoscaling,HttpLoadBalancing --enable-autoupgrade --enable-autorepair`
 
 	cmd := fmt.Sprintf(cmd_tpl, cluster.project, cluster.name, cluster.zone, cluster.machineType,
 		cluster.nbInstance, cluster.network, cluster.subnetwork, cluster.minNodes,
-		cluster.maxNodes)
+		cluster.maxNodes, options)
 
 	err, out, errout := Shellout(cmd)
 	if err != nil {
@@ -95,7 +99,7 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
 	c <- outmsg
 }
 
-func BuildClusterList(nbCluster int, nbInstance int, machineType string, project string,
+func BuildClusterList(psp bool, nbCluster int, nbInstance int, machineType string, project string,
 	regionzones []RegionZone) []Cluster {
 
 	clusters := make([]Cluster, 0)
@@ -118,7 +122,8 @@ func BuildClusterList(nbCluster int, nbInstance int, machineType string, project
 			network:     network,
 			subnetwork:  subnetwork,
 			minNodes:    minNodes,
-			maxNodes:    maxNodes}
+			maxNodes:    maxNodes,
+		    psp:         psp}
 		clusters = append(clusters, c)
 	}
 	return clusters
@@ -190,6 +195,7 @@ type Cluster struct {
 	subnetwork  string
 	minNodes    int
 	maxNodes    int
+	psp         bool
 }
 
 type InstanceCluster struct {

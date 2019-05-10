@@ -13,6 +13,7 @@ func main() {
 
 	numK8sClusterPtr := flag.Int("k8s", 1, "Number of GKE/K8S clusters")
 	numNodePtr := flag.Int("num-nodes", 2, "Number of nodes in each GKE/K8S cluster")
+	k8sPsp := flag.Bool("psp", false, "Enable pod security policies on GKE/K8S cluster")
 
 	// Number of instances cluster to create
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
@@ -31,7 +32,7 @@ func main() {
 	zones = []rune{'a', 'a'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
-	k8sClusters := BuildClusterList(*numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
+	k8sClusters := BuildClusterList(*k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
 	vmClusters := BuildInstanceClusterList(*numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
 		regionzones)
 
