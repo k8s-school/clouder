@@ -10,6 +10,7 @@ func main() {
 	projectPtr := flag.String("project", "coastal-sunspot-206412", "Identifier of GCP project")
 
 	machineTypePtr := flag.String("machine-type", "n1-standard-2", "GCE machine type")
+	clusterVersion := flag.String("cluster-version", "1.12.8-gke.6", "GKE cluster version")
 
 	numK8sClusterPtr := flag.Int("k8s", 1, "Number of GKE/K8S clusters")
 	numNodePtr := flag.Int("num-nodes", 2, "Number of nodes in each GKE/K8S cluster")
@@ -32,7 +33,7 @@ func main() {
 	zones = []rune{'a', 'a'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
-	k8sClusters := BuildClusterList(*k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
+	k8sClusters := BuildClusterList(*clusterVersion, *k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
 	vmClusters := BuildInstanceClusterList(*numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
 		regionzones)
 

@@ -72,7 +72,7 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
 
 	var err_out error
 	cmd_tpl := `gcloud beta container --project "%v" clusters create "%v" --zone "%v" \
-    --no-enable-basic-auth --cluster-version "1.11.8-gke.6" --machine-type "%v" \
+    --no-enable-basic-auth --cluster-version "%v" --machine-type "%v" \
     --image-type "COS" --disk-type "pd-standard" --disk-size "100" \
     --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
     --preemptible --num-nodes "%v" --no-enable-cloud-logging --no-enable-cloud-monitoring \
@@ -80,7 +80,7 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
 	--enable-autoscaling --min-nodes "%v" --max-nodes "%v" %v \
     --addons HorizontalPodAutoscaling,HttpLoadBalancing --enable-autoupgrade --enable-autorepair`
 
-	cmd := fmt.Sprintf(cmd_tpl, cluster.project, cluster.name, cluster.zone, cluster.machineType,
+	cmd := fmt.Sprintf(cmd_tpl, cluster.project, cluster.name, cluster.zone, cluster.clusterVersion, cluster.machineType,
 		cluster.nbInstance, cluster.network, cluster.subnetwork, cluster.minNodes,
 		cluster.maxNodes, options)
 
@@ -99,7 +99,7 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
 	c <- outmsg
 }
 
-func BuildClusterList(psp bool, nbCluster int, nbInstance int, machineType string, project string,
+func BuildClusterList(clusterVersion string, psp bool, nbCluster int, nbInstance int, machineType string, project string,
 	regionzones []RegionZone) []Cluster {
 
 	clusters := make([]Cluster, 0)
@@ -113,17 +113,18 @@ func BuildClusterList(psp bool, nbCluster int, nbInstance int, machineType strin
 		maxNodes := 4
 
 		c := Cluster{
-			project:     project,
-			name:        name,
-			region:      region,
-			zone:        zone,
-			machineType: machineType,
-			nbInstance:  nbInstance,
-			network:     network,
-			subnetwork:  subnetwork,
-			minNodes:    minNodes,
-			maxNodes:    maxNodes,
-		    psp:         psp}
+			clusterVersion: clusterVersion,
+			project:        project,
+			name:           name,
+			region:         region,
+			zone:           zone,
+			machineType:    machineType,
+			nbInstance:     nbInstance,
+			network:        network,
+			subnetwork:     subnetwork,
+			minNodes:       minNodes,
+			maxNodes:       maxNodes,
+			psp:            psp}
 		clusters = append(clusters, c)
 	}
 	return clusters
@@ -185,17 +186,18 @@ func CreateAllClusters(instanceClusters []InstanceCluster, clusters []Cluster) e
 }
 
 type Cluster struct {
-	project     string
-	name        string
-	region      string
-	zone        string
-	machineType string
-	nbInstance  int
-	network     string
-	subnetwork  string
-	minNodes    int
-	maxNodes    int
-	psp         bool
+	clusterVersion string
+	project        string
+	name           string
+	region         string
+	zone           string
+	machineType    string
+	nbInstance     int
+	network        string
+	subnetwork     string
+	minNodes       int
+	maxNodes       int
+	psp            bool
 }
 
 type InstanceCluster struct {
