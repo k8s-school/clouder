@@ -139,7 +139,7 @@ func BuildInstanceClusterList(nbInstanceCluster int, nbInstance int, machineType
 		name := fmt.Sprintf("clus%v", i)
 		region := rz.region
 		zone := rz.zone
-		image := "ubuntu-1804-bionic-v20190404"
+		image := "ubuntu-1804-bionic-v20190628"
 		imageProject := "ubuntu-os-cloud"
 
 		is := InstanceCluster{
