@@ -10,7 +10,7 @@ func main() {
 	projectPtr := flag.String("project", "coastal-sunspot-206412", "Identifier of GCP project")
 
 	machineTypePtr := flag.String("machine-type", "n1-standard-2", "GCE machine type")
-	clusterVersion := flag.String("cluster-version", "1.12.8-gke.10", "GKE cluster version")
+	clusterVersion := flag.String("cluster-version", "1.14.6-gke.13", "GKE cluster version")
 
 	numK8sClusterPtr := flag.Int("k8s", 1, "Number of GKE/K8S clusters")
 	numNodePtr := flag.Int("num-nodes", 2, "Number of nodes in each GKE/K8S cluster")
