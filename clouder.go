@@ -70,9 +70,11 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
 		options = "--enable-pod-security-policy"
 	}
 
+	cluster_version_opt := fmt.Sprintf(`--cluster-version "%v"`, cluster.clusterVersion)
+
 	var err_out error
 	cmd_tpl := `gcloud beta container --project "%v" clusters create "%v" --zone "%v" \
-    --no-enable-basic-auth --cluster-version "%v" --machine-type "%v" \
+    --no-enable-basic-auth %v --machine-type "%v" \
     --image-type "COS" --disk-type "pd-standard" --disk-size "100" \
     --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
     --preemptible --num-nodes "%v" --no-enable-cloud-logging --no-enable-cloud-monitoring \
@@ -80,7 +82,7 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
 	--enable-autoscaling --min-nodes "%v" --max-nodes "%v" %v \
     --addons HorizontalPodAutoscaling,HttpLoadBalancing --enable-autoupgrade --enable-autorepair`
 
-	cmd := fmt.Sprintf(cmd_tpl, cluster.project, cluster.name, cluster.zone, cluster.clusterVersion, cluster.machineType,
+	cmd := fmt.Sprintf(cmd_tpl, cluster.project, cluster.name, cluster.zone, cluster_version_opt, cluster.machineType,
 		cluster.nbInstance, cluster.network, cluster.subnetwork, cluster.minNodes,
 		cluster.maxNodes, options)
 
