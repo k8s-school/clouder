@@ -20,6 +20,7 @@ func main() {
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
 	numVirtualPtr := flag.Int("num-vms", 3, "Number of instances in each virtual machine cluster")
 
+	imageProject := flag.String("image", "centos-cloud", "VM image")
 	image := flag.String("image", "centos-8-v20191210", "VM image")
 
 	flag.Parse()
@@ -47,7 +48,7 @@ func main() {
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	k8sClusters := BuildClusterList(*clusterVersion, *k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
-	vmClusters := BuildInstanceClusterList(*image, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
+	vmClusters := BuildInstanceClusterList(*image, *imageProject, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
 		regionzones)
 
 	err := CreateAllClusters(vmClusters, k8sClusters)
