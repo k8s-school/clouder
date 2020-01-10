@@ -20,8 +20,14 @@ func main() {
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
 	numVirtualPtr := flag.Int("num-vms", 3, "Number of instances in each virtual machine cluster")
 
-	imageProject := flag.String("image-project", "centos-cloud", "VM image")
-	image := flag.String("image", "centos-8-v20191210", "VM image")
+	// defaultImageProject := "centos-cloud"
+	// defaultImage := "centos-8-v20191210"
+
+	defaultImageProject := "ubuntu-os-cloud"
+	defaultImage := "ubuntu-1804-bionic-v20200108"
+
+	imageProject := flag.String("image-project", defaultImageProject, "VM image project")
+	image := flag.String("image", defaultImage, "VM image")
 
 	flag.Parse()
 
