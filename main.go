@@ -19,6 +19,9 @@ func main() {
 	// Number of instances cluster to create
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
 	numVirtualPtr := flag.Int("num-vms", 3, "Number of instances in each virtual machine cluster")
+
+	image := flag.String("image", "ubuntu-1804-bionic-v20190628", "VM image")
+
 	flag.Parse()
 
 	regionzones := make([]RegionZone, 0)
@@ -44,7 +47,7 @@ func main() {
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	k8sClusters := BuildClusterList(*clusterVersion, *k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
-	vmClusters := BuildInstanceClusterList(*numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
+	vmClusters := BuildInstanceClusterList(*image, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
 		regionzones)
 
 	err := CreateAllClusters(vmClusters, k8sClusters)

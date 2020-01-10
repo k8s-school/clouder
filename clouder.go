@@ -132,7 +132,7 @@ func BuildClusterList(clusterVersion string, psp bool, nbCluster int, nbInstance
 	return clusters
 }
 
-func BuildInstanceClusterList(nbInstanceCluster int, nbInstance int, machineType string, project string,
+func BuildInstanceClusterList(image string, nbInstanceCluster int, nbInstance int, machineType string, project string,
 	regionzones []RegionZone) []InstanceCluster {
 	// Create a list of InstanceCluster,
 	// where InstanceCluster represents of group of GCE instance in the same RegioZone
@@ -141,7 +141,7 @@ func BuildInstanceClusterList(nbInstanceCluster int, nbInstance int, machineType
 		name := fmt.Sprintf("clus%v", i)
 		region := rz.region
 		zone := rz.zone
-		image := "ubuntu-1804-bionic-v20190628"
+		image := image
 		imageProject := "ubuntu-os-cloud"
 
 		is := InstanceCluster{
