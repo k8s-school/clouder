@@ -12,7 +12,7 @@ func main() {
 	machineTypePtr := flag.String("machine-type", "n1-standard-2", "GCE machine type")
 	clusterVersion := flag.String("cluster-version", "", "GKE cluster version")
 
-	numK8sClusterPtr := flag.Int("k8s", 1, "Number of GKE/K8S clusters")
+	numK8sClusterPtr := flag.Int("k8s", 0, "Number of GKE/K8S clusters")
 	numNodePtr := flag.Int("num-nodes", 2, "Number of nodes in each GKE/K8S cluster")
 	k8sPsp := flag.Bool("psp", false, "Enable pod security policies on GKE/K8S cluster")
 
@@ -20,7 +20,7 @@ func main() {
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
 	numVirtualPtr := flag.Int("num-vms", 3, "Number of instances in each virtual machine cluster")
 
-	image := flag.String("image", "ubuntu-1804-bionic-v20190628", "VM image")
+	image := flag.String("image", "centos-8-v20191210", "VM image")
 
 	flag.Parse()
 
