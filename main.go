@@ -53,6 +53,16 @@ func main() {
 	zones = []rune{'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
+	prefix = "asia-east"
+	idxs = []int{1, 2}
+	zones = []rune{'c'}
+	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
+	prefix = "asia-northeast"
+	idxs = []int{1, 2}
+	zones = []rune{'c'}
+	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
 	k8sClusters := BuildClusterList(*clusterVersion, *k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
 	vmClusters := BuildInstanceClusterList(*image, *imageProject, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
 		regionzones)
