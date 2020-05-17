@@ -33,19 +33,19 @@ func main() {
 
 	regionzones := make([]RegionZone, 0)
 
-	prefix := "europe-west"
-	idxs := []int{1, 2, 3, 4, 6}
-	zones := []rune{'c', 'c', 'c', 'c', 'c'}
+	prefix := "asia-east"
+	idxs := []int{1, 2}
+	zones := []rune{'c', 'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
-	prefix = "us-west"
+	prefix = "asia-northeast"
 	idxs = []int{1, 2}
-	zones = []rune{'a', 'a'}
+	zones = []rune{'c', 'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
-	prefix = "us-east"
-	idxs = []int{1, 4}
-	zones = []rune{'c', 'c'}
+	prefix = "asia-southeast"
+	idxs = []int{1}
+	zones = []rune{'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	prefix = "europe-north"
@@ -53,14 +53,24 @@ func main() {
 	zones = []rune{'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
-	prefix = "asia-east"
-	idxs = []int{1, 2}
+	prefix = "europe-west"
+	idxs = []int{1, 2, 3, 4, 6}
+	zones = []rune{'c', 'c', 'c', 'c', 'c'}
+	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
+	prefix = "northamerica-northeast"
+	idxs = []int{1}
+	zones = []rune{'c'}
+	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
+	prefix = "us-east"
+	idxs = []int{1, 4}
 	zones = []rune{'c', 'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
-	prefix = "asia-northeast"
+	prefix = "us-west"
 	idxs = []int{1, 2}
-	zones = []rune{'c', 'c'}
+	zones = []rune{'a', 'a'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	k8sClusters := BuildClusterList(*clusterVersion, *k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
