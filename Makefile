@@ -1,5 +1,5 @@
 OUT := clouder
-PKG := github.com/fjammes/clouder
+PKG := github.com/k8s-school/clouder
 VERSION := $(shell git describe --always --long --dirty)
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/)
