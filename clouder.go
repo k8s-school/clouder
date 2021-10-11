@@ -31,7 +31,7 @@ func CreateInstanceCluster(instanceCluster InstanceCluster, c chan OutMsg) {
 
 	var errOut error
 
-	cmdTpl := `gcloud beta compute --project="%v" instances create %v \
+	cmdTpl := `gcloud compute --project="%v" instances create %v \
         --zone="%v" --machine-type="%v" --subnet=default \
         --scopes=https://www.googleapis.com/auth/cloud-platform \
         --image="%v" \
@@ -73,7 +73,7 @@ func CreateCluster(cluster Cluster, c chan OutMsg) {
 	cluster_version_opt := fmt.Sprintf(`--cluster-version "%v"`, cluster.clusterVersion)
 
 	var err_out error
-	cmd_tpl := `gcloud beta container --project "%v" clusters create "%v" --zone "%v" \
+	cmd_tpl := `gcloud container --project "%v" clusters create "%v" --zone "%v" \
     --no-enable-basic-auth %v --machine-type "%v" \
     --image-type "COS" --disk-type "pd-standard" --disk-size "100" \
     --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
