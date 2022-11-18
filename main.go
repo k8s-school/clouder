@@ -24,7 +24,7 @@ func main() {
 	// defaultImage := "centos-8-v20191210"
 
 	defaultImageProject := "ubuntu-os-cloud"
-	defaultImage := "ubuntu-1804-bionic-v20200108"
+	defaultImage := "ubuntu-minimal-2004-focal-v20221118"
 
 	imageProject := flag.String("image-project", defaultImageProject, "VM image project")
 	image := flag.String("image", defaultImage, "VM image")
