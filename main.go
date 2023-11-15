@@ -35,17 +35,15 @@ func main() {
 
 	prefix := "asia-east"
 	idxs := []int{1, 2}
-	zones := []rune{'c', 'c'}
+	zones := []rune{'a', 'b', 'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	prefix = "asia-northeast"
-	idxs = []int{1, 2}
-	zones = []rune{'c', 'c'}
+	idxs = []int{1, 2, 3}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	prefix = "asia-southeast"
-	idxs = []int{1}
-	zones = []rune{'c'}
+	idxs = []int{1, 2}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	prefix = "europe-north"
@@ -54,8 +52,8 @@ func main() {
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	prefix = "europe-west"
-	idxs = []int{1, 2, 3, 4, 6}
-	zones = []rune{'c', 'c', 'c', 'c', 'c'}
+	idxs = []int{1, 2, 3, 4, 6, 7, 8, 9, 10}
+	zones = []rune{'b', 'c'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	prefix = "northamerica-northeast"

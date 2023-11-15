@@ -218,13 +218,15 @@ type RegionZone struct {
 }
 
 func appendRegionZones(rzs []RegionZone, prefix string, idxs []int, zones []rune) []RegionZone {
-	for i, idx := range idxs {
+	for _, idx := range idxs {
 		region := fmt.Sprintf("%v%v", prefix, idx)
-		zone := fmt.Sprintf("%v-%v", region, string(zones[i]))
-		r := RegionZone{
-			region: region,
-			zone:   zone}
-		rzs = append(rzs, r)
+		for _, zone := range zones {
+			zone := fmt.Sprintf("%v-%v", region, string(zone))
+			r := RegionZone{
+				region: region,
+				zone:   zone}
+			rzs = append(rzs, r)
+		}
 	}
 	return rzs
 }
