@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 )
 
@@ -70,6 +71,8 @@ func main() {
 	idxs = []int{1, 2}
 	zones = []rune{'a', 'a'}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
+	fmt.Printf("regionzones: %v %d\n", regionzones, len(regionzones))
 
 	k8sClusters := BuildClusterList(*clusterVersion, *k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
 	vmClusters := BuildInstanceClusterList(*image, *imageProject, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,

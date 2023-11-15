@@ -136,7 +136,7 @@ func BuildInstanceClusterList(image string, imageProject string, nbInstanceClust
 	regionzones []RegionZone) []InstanceCluster {
 	// Create a list of InstanceCluster,
 	// where InstanceCluster represents of group of GCE instance in the same RegioZone
-	instanceClusters := make([]InstanceCluster, 0, 30)
+	instanceClusters := make([]InstanceCluster, 0)
 	for i, rz := range regionzones[0:nbInstanceCluster] {
 		name := fmt.Sprintf("clus%v", i)
 		region := rz.region
