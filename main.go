@@ -76,8 +76,8 @@ func main() {
 
 		zones = UpdateZones(vmClusters, zones)
 		vmClusters = CreateClusters(vmClusters)
-		if hasError {
-			log.Printf("Error creating clusters, retrying")
+		if len(vmClusters) != 0 {
+			log.Println("Error creating clusters, retrying")
 
 		}
 	}
