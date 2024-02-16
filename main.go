@@ -13,7 +13,7 @@ func main() {
 
 	projectPtr := flag.String("project", "coastal-sunspot-206412", "Identifier of GCP project")
 
-	machineTypePtr := flag.String("machine-type", "n1-standard-1", "GCE machine type")
+	machineTypePtr := flag.String("machine-type", "n1-standard-2", "GCE machine type")
 
 	// Number of instances cluster to create
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
@@ -58,7 +58,7 @@ func main() {
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "us-east"
-	ids = []string{"1-a", "2-a"}
+	ids = []string{"1-a", "1-b", "2-a", "4-a", "4-b"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "asia-east"
