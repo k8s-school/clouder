@@ -88,6 +88,9 @@ func BuildInstanceClusterList(image string, imageProject string, nbInstanceClust
 }
 
 func UpdateZones(clusters []InstanceCluster, regionzones []RegionZone) []RegionZone {
+	if len(regionzones) < len(clusters) {
+		log.Fatalf("not enough regionzones: %v %v", len(clusters), len(regionzones))
+	}
 	for i, c := range clusters {
 		rz := regionzones[i]
 		c.region = rz.region
