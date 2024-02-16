@@ -28,7 +28,7 @@ func main() {
 	// defaultImage := "centos-8-v20191210"
 
 	defaultImageProject := "ubuntu-os-cloud"
-	defaultImage := "ubuntu-minimal-2004-focal-v20221118"
+	defaultImage := "ubuntu-minimal-2004-focal-v20240209a"
 
 	imageProject := flag.String("image-project", defaultImageProject, "VM image project")
 	image := flag.String("image", defaultImage, "VM image")
@@ -37,18 +37,9 @@ func main() {
 
 	regionzones := make([]RegionZone, 0)
 
-	prefix := "asia-east"
-	idxs := []int{1, 2}
-	zones := []rune{'a', 'b', 'c'}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
-
-	prefix = "asia-northeast"
-	idxs = []int{1, 2, 3}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
-
-	prefix = "asia-southeast"
-	idxs = []int{1, 2}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+	var prefix string
+	var idxs []int
+	var zones []rune
 
 	prefix = "europe-north"
 	idxs = []int{1}
@@ -73,6 +64,19 @@ func main() {
 	prefix = "us-west"
 	idxs = []int{1, 2}
 	zones = []rune{'a', 'a'}
+	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
+	prefix = "asia-east"
+	idxs = []int{1, 2}
+	zones = []rune{'a', 'b', 'c'}
+	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
+	prefix = "asia-northeast"
+	idxs = []int{1, 2, 3}
+	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+
+	prefix = "asia-southeast"
+	idxs = []int{1, 2}
 	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
 
 	fmt.Printf("regionzones: %v %d\n", regionzones, len(regionzones))
