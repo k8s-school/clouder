@@ -35,49 +35,29 @@ func main() {
 
 	flag.Parse()
 
+	// Get zone with
+	// gcloud compute machine-types list --filter="name=n1-standard-2" --format="value(zone)"
+	// gcloud compute machine-types list --filter="name=n1-standard-2" --format="value(zone)"
 	regionzones := make([]RegionZone, 0)
 
 	var prefix string
-	var idxs []int
-	var zones []rune
+	var ids []string
 
-	prefix = "europe-north"
-	idxs = []int{1}
-	zones = []rune{'c'}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+	prefix = "us-central"
+	ids = []string{"1-a", "1-b", "1-c", "1-f", "1-d", "2-a", "2-b", "2-c"}
+	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "europe-west"
-	idxs = []int{1, 2, 3, 4, 6, 7, 8, 9, 10}
-	zones = []rune{'b', 'c'}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
-
-	prefix = "northamerica-northeast"
-	idxs = []int{1}
-	zones = []rune{'c'}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
-
-	prefix = "us-east"
-	idxs = []int{1, 4}
-	zones = []rune{'c', 'c'}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+	ids = []string{"1-b", "1-c", "1-d"}
+	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "us-west"
-	idxs = []int{1, 2}
-	zones = []rune{'a', 'a'}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+	ids = []string{"1-a", "1-b", "1-c"}
+	regionzones = appendRegionZones(regionzones, prefix, ids)
 
-	prefix = "asia-east"
-	idxs = []int{1, 2}
-	zones = []rune{'a', 'b', 'c'}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
-
-	prefix = "asia-northeast"
-	idxs = []int{1, 2, 3}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
-
-	prefix = "asia-southeast"
-	idxs = []int{1, 2}
-	regionzones = appendRegionZones(regionzones, prefix, idxs, zones)
+	prefix = "us-east"
+	ids = []string{"1-a", "1-b", "1-c"}
+	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	fmt.Printf("regionzones: %v %d\n", regionzones, len(regionzones))
 

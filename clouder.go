@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"strings"
 )
 
 const ShellToUse = "bash"
@@ -217,16 +218,19 @@ type RegionZone struct {
 	zone   string
 }
 
-func appendRegionZones(rzs []RegionZone, prefix string, idxs []int, zones []rune) []RegionZone {
-	for _, idx := range idxs {
-		region := fmt.Sprintf("%v%v", prefix, idx)
-		for _, zone := range zones {
-			zone := fmt.Sprintf("%v-%v", region, string(zone))
-			r := RegionZone{
-				region: region,
-				zone:   zone}
-			rzs = append(rzs, r)
+func appendRegionZones(rzs []RegionZone, prefix string, ids []string) []RegionZone {
+	for _, id := range ids {
+		// split id on -
+		s := strings.Split(id, "-")
+		if len(s) != 2 {
+			log.Fatalf("invalid id: %v", id)
 		}
+		region := fmt.Sprintf("%v%v", prefix, s[0])
+		zone := fmt.Sprintf("%v-%v", region, s[1])
+		r := RegionZone{
+			region: region,
+			zone:   zone}
+		rzs = append(rzs, r)
 	}
 	return rzs
 }
