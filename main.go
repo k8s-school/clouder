@@ -13,16 +13,11 @@ func main() {
 
 	projectPtr := flag.String("project", "coastal-sunspot-206412", "Identifier of GCP project")
 
-	machineTypePtr := flag.String("machine-type", "n1-standard-2", "GCE machine type")
-	clusterVersion := flag.String("cluster-version", "", "GKE cluster version")
-
-	numK8sClusterPtr := flag.Int("k8s", 0, "Number of GKE/K8S clusters")
-	numNodePtr := flag.Int("num-nodes", 2, "Number of nodes in each GKE/K8S cluster")
-	k8sPsp := flag.Bool("psp", false, "Enable pod security policies on GKE/K8S cluster")
+	machineTypePtr := flag.String("machine-type", "n1-standard-1", "GCE machine type")
 
 	// Number of instances cluster to create
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
-	numVirtualPtr := flag.Int("num-vms", 3, "Number of instances in each virtual machine cluster")
+	numVirtualPtr := flag.Int("num-vms", 2, "Number of instances in each virtual machine cluster")
 
 	// defaultImageProject := "centos-cloud"
 	// defaultImage := "centos-8-v20191210"
@@ -44,30 +39,45 @@ func main() {
 	var ids []string
 
 	prefix = "us-central"
-	ids = []string{"1-a", "1-b", "1-c", "1-f", "1-d", "2-a", "2-b", "2-c"}
+	ids = []string{"1-a", "1-b", "2-a", "2-b"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "europe-west"
-	ids = []string{"1-b", "1-c", "1-d"}
+	ids = []string{"1-b", "1-c"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "us-west"
-	ids = []string{"1-a", "1-b", "1-c"}
+	ids = []string{"1-a", "1-b"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "us-east"
-	ids = []string{"1-a", "1-b", "1-c"}
+	ids = []string{"1-a", "2-a"}
+	regionzones = appendRegionZones(regionzones, prefix, ids)
+
+	prefix = "asia-east"
+	ids = []string{"1-a", "2-a"}
+	regionzones = appendRegionZones(regionzones, prefix, ids)
+
+	prefix = "asia-northeast"
+	ids = []string{"1-a"}
+	regionzones = appendRegionZones(regionzones, prefix, ids)
+
+	prefix = "asia-southeast"
+	ids = []string{"1-a"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	fmt.Printf("regionzones: %v %d\n", regionzones, len(regionzones))
 
-	k8sClusters := BuildClusterList(*clusterVersion, *k8sPsp, *numK8sClusterPtr, *numNodePtr, *machineTypePtr, *projectPtr, regionzones)
-	vmClusters := BuildInstanceClusterList(*image, *imageProject, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr,
-		regionzones)
+	vmClusters := BuildInstanceClusterList(*image, *imageProject, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr)
 
-	err := CreateAllClusters(vmClusters, k8sClusters)
-	if err != nil {
-		log.Printf("Error(s) while creating cluster(s): %v", err)
+	hasError := true
+	for hasError && len(regionzones) > 0 {
 
+		UpdateZones(vmClusters, regionzones)
+		hasError = CreateClusters(vmClusters)
+		if hasError {
+			log.Printf("Error creating clusters, retrying")
+
+		}
 	}
 }
