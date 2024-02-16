@@ -91,10 +91,10 @@ func UpdateZones(clusters []InstanceCluster, regionzones []RegionZone) []RegionZ
 	if len(regionzones) < len(clusters) {
 		log.Fatalf("not enough regionzones: %v %v", len(clusters), len(regionzones))
 	}
-	for i, c := range clusters {
+	for i := range clusters {
 		rz := regionzones[i]
-		c.region = rz.region
-		c.zone = rz.zone
+		clusters[i].region = rz.region
+		clusters[i].zone = rz.zone
 	}
 	return regionzones[len(clusters):]
 }
