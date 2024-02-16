@@ -87,7 +87,7 @@ func BuildInstanceClusterList(image string, imageProject string, nbInstanceClust
 	return instanceClusters
 }
 
-func UpdateZones(clusters []InstanceCluster, regionzones []RegionZone) {
+func UpdateZones(clusters []InstanceCluster, regionzones []RegionZone) []RegionZone {
 	for i, c := range clusters {
 		if !c.created {
 			rz := regionzones[i]
@@ -95,18 +95,19 @@ func UpdateZones(clusters []InstanceCluster, regionzones []RegionZone) {
 			clusters[i].zone = rz.zone
 		}
 	}
-	regionzones = regionzones[len(clusters):]
+	return regionzones[len(clusters):]
 }
 
-func CreateClusters(instanceClusters []InstanceCluster) bool {
+func CreateClusters(instanceClusters []InstanceCluster) []InstanceCluster {
 	// var err_msgs string
-	var hasError bool = false
+	clustersInError := make([]InstanceCluster, 0)
 
-	log.Printf("Create %v vm clusters", len(instanceClusters))
+	log.Printf("Create %d vm clusters", len(instanceClusters))
 	chans := make([]chan OutMsg, 0)
 	for _, instanceCluster := range instanceClusters {
 		c := make(chan OutMsg)
 		chans = append(chans, c)
+		log.Printf("Creating cluster %v", instanceCluster.name)
 		go CreateInstanceCluster(instanceCluster, c)
 	}
 	for _, c := range chans {
@@ -114,15 +115,12 @@ func CreateClusters(instanceClusters []InstanceCluster) bool {
 		log.Println(outmsg.cmd)
 		log.Println(outmsg.out)
 		if outmsg.err != nil {
-			outmsg.cluster.created = false
+			clustersInError = append(clustersInError, outmsg.cluster)
 			log.Println(outmsg.err)
 			log.Println(outmsg.errout)
-			hasError = true
-		} else {
-			outmsg.cluster.created = true
 		}
 	}
-	return hasError
+	return clustersInError
 }
 
 type InstanceCluster struct {

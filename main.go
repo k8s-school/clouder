@@ -71,10 +71,11 @@ func main() {
 	vmClusters := BuildInstanceClusterList(*image, *imageProject, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr)
 
 	hasError := true
+	zones := regionzones
 	for hasError && len(regionzones) > 0 {
 
-		UpdateZones(vmClusters, regionzones)
-		hasError = CreateClusters(vmClusters)
+		zones = UpdateZones(vmClusters, zones)
+		vmClusters = CreateClusters(vmClusters)
 		if hasError {
 			log.Printf("Error creating clusters, retrying")
 
