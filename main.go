@@ -31,8 +31,7 @@ func main() {
 	flag.Parse()
 
 	// Get zone with
-	// gcloud compute machine-types list --filter="name=n1-standard-2" --format="value(zone)"
-	// gcloud compute machine-types list --filter="name=n1-standard-2" --format="value(zone)"
+	// gcloud compute machine-types list --filter="name=n1-standard-1" --format="value(zone)"
 	regionzones := make([]RegionZone, 0)
 
 	var prefix string
@@ -43,19 +42,19 @@ func main() {
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "europe-west"
-	ids = []string{"1-b", "1-c", "2-b", "2-c"}
+	ids = []string{"1-b", "1-c", "2-b", "2-c", "3-a", "3-b", "4-a", "4-b", "6-a", "6-b"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "europe-central"
-	ids = []string{"2-a", "2-b", "2-c"}
+	ids = []string{"2-a", "2-b"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "europe-north"
-	ids = []string{"1-a", "1-b", "1-c"}
+	ids = []string{"1-a", "1-b"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "us-west"
-	ids = []string{"1-a", "1-b"}
+	ids = []string{"1-a", "1-b", "2-a", "2-b", "3-a", "3-b", "4-a", "4-b"}
 	regionzones = appendRegionZones(regionzones, prefix, ids)
 
 	prefix = "us-east"
