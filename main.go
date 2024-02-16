@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	Version := "0.0.1"
+	Version := "0.0.1-rc1"
 	fmt.Printf("Version: %v\n", Version)
 
 	projectPtr := flag.String("project", "coastal-sunspot-206412", "Identifier of GCP project")
