@@ -89,11 +89,9 @@ func BuildInstanceClusterList(image string, imageProject string, nbInstanceClust
 
 func UpdateZones(clusters []InstanceCluster, regionzones []RegionZone) []RegionZone {
 	for i, c := range clusters {
-		if !c.created {
-			rz := regionzones[i]
-			clusters[i].region = rz.region
-			clusters[i].zone = rz.zone
-		}
+		rz := regionzones[i]
+		c.region = rz.region
+		c.zone = rz.zone
 	}
 	return regionzones[len(clusters):]
 }
