@@ -77,9 +77,8 @@ func main() {
 
 	vmClusters := BuildInstanceClusterList(*image, *imageProject, *numVirtualClusterPtr, *numVirtualPtr, *machineTypePtr, *projectPtr)
 
-	hasError := true
 	zones := regionzones
-	for hasError && len(regionzones) > 0 {
+	for len(vmClusters) != 0 && len(regionzones) > 0 {
 
 		zones = UpdateZones(vmClusters, zones)
 		vmClusters = CreateClusters(vmClusters)

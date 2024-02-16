@@ -103,12 +103,11 @@ func CreateClusters(instanceClusters []InstanceCluster) []InstanceCluster {
 	// var err_msgs string
 	clustersInError := make([]InstanceCluster, 0)
 
-	log.Printf("Create %d vm clusters", len(instanceClusters))
+	log.Printf("Create %d vm clusters: %v", len(instanceClusters), instanceClusters)
 	chans := make([]chan OutMsg, 0)
 	for _, instanceCluster := range instanceClusters {
 		c := make(chan OutMsg)
 		chans = append(chans, c)
-		log.Printf("Creating cluster %v", instanceCluster.name)
 		go CreateInstanceCluster(instanceCluster, c)
 	}
 	for _, c := range chans {
