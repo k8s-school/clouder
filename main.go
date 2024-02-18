@@ -84,7 +84,7 @@ func main() {
 		vmClusters = CreateClusters(vmClusters)
 		if len(vmClusters) != 0 {
 			log.Println("Error creating clusters, retrying")
-
+			log.Println("If a cluster is partially create, please delete all its vm instances before recreating it")
 		}
 	}
 }
