@@ -13,7 +13,7 @@ func main() {
 
 	projectPtr := flag.String("project", "coastal-sunspot-206412", "Identifier of GCP project")
 
-	machineTypePtr := flag.String("machine-type", "n1-standard-2", "GCE machine type")
+	machineTypePtr := flag.String("machine-type", "e2-standard-2", "GCE machine type")
 
 	// Number of instances cluster to create
 	numVirtualClusterPtr := flag.Int("vm", 1, "Number of virtual machine clusters")
@@ -23,7 +23,7 @@ func main() {
 	// defaultImage := "centos-8-v20191210"
 
 	defaultImageProject := "ubuntu-os-cloud"
-	defaultImage := "ubuntu-minimal-2004-focal-v20240209a"
+	defaultImage := "ubuntu-minimal-2004-focal-v20240930"
 
 	imageProject := flag.String("image-project", defaultImageProject, "VM image project")
 	image := flag.String("image", defaultImage, "VM image")
